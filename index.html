@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Orientation Bac Guinée | Accompagnement Post-Bac</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <button class="back-to-top" id="backToTop" aria-label="Retour en haut">↑</button>
+
+  <header class="main-header" id="mainHeader">
+    <div class="container header-inner">
+      <a href="#hero" class="logo">Orientation Bac Guinée</a>
+      <nav class="nav-links" aria-label="Navigation principale">
+        <a href="#hero">Accueil</a>
+        <a href="#services">Accompagnement</a>
+        <a href="#pricing">Tarif</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <a href="#contact" class="button button-primary">Commencer</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">Accompagnement personnalisé</span>
+          <p class="hero-name">Avec JACQUES PEVE BILIVOGUI</p>
+          <h1>Félicitations pour votre réussite au Baccalauréat !</h1>
+          <p>Ne laissez pas les démarches administratives devenir un obstacle. Je vous accompagne personnellement depuis le regroupement des documents jusqu'à votre inscription définitive à l'université.</p>
+          <div class="hero-actions">
+            <a href="#contact" class="button button-primary">Commencer</a>
+            <button class="button button-secondary" id="heroWhatsapp">Me contacter sur WhatsApp</button>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="illustration-card">
+            <div class="illustration-shape"></div>
+            <div class="portrait-frame">
+              <img src="WhatsApp Image 2026-08-25 at 12.30.35.jpeg" alt="Conseiller en orientation" />
+            </div>
+            <div class="illustration-text">
+              <span>Votre conseiller</span>
+              <strong>JACQUES PEVE BILIVOGUI</strong>
+              <small>Aide, orientation et suivi administratif</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="services">
+      <div class="container section-header fade-up">
+        <p class="section-label">Pourquoi me choisir ?</p>
+        <h2>Un accompagnement sur mesure pour chaque nouveau bachelier.</h2>
+      </div>
+      <div class="container cards-grid fade-up">
+        <article class="feature-card">
+          <h3>Accompagnement personnalisé</h3>
+          <p>Un suivi adapté à votre situation, dossier et calendrier administratif.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Suivi individuel</h3>
+          <p>Un conseiller dédié reste à votre disposition jusqu'à l'inscription finale.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Gain de temps</h3>
+          <p>J'organise vos étapes pour éviter les retards et les erreurs.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Conseils fiables</h3>
+          <p>Des recommandations basées sur l'expérience des procédures en Guinée.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Orientation</h3>
+          <p>Je vous aide à choisir la filière et l'université qui correspondent à votre profil.</p>
+        </article>
+        <article class="feature-card">
+          <h3>Disponibilité</h3>
+          <p>Assistance continue par WhatsApp et point de suivi régulier.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section form-section" id="formSection">
+      <div class="container form-grid fade-up">
+        <div class="form-copy">
+          <p class="section-label">Formulaire de contact</p>
+          <h2>Votre accompagnement démarre ici.</h2>
+          <p>Remplissez le formulaire pour recevoir une réponse rapide et un plan d'accompagnement complet.</p>
+        </div>
+        <form class="contact-form" id="contactForm">
+          <div class="input-grid">
+            <label>
+              Nom<span>*</span>
+              <input type="text" id="lastName" name="lastName" placeholder="Votre nom" required />
+            </label>
+            <label>
+              Prénom<span>*</span>
+              <input type="text" id="firstName" name="firstName" placeholder="Votre prénom" required />
+            </label>
+            <label>
+              Téléphone<span>*</span>
+              <input type="tel" id="phone" name="phone" placeholder="+224 6XX XXX XXX" required />
+            </label>
+            <label>
+              Département / Préfecture<span>*</span>
+              <input type="text" id="location" name="location" placeholder="Conakry, Kindia..." required />
+            </label>
+            <label>
+              Série du Bac<span>*</span>
+              <input type="text" id="series" name="series" placeholder="Littéraire, Scientifique..." required />
+            </label>
+            <label>
+              Moyenne
+              <input type="text" id="average" name="average" placeholder="Exemple : 12.75" />
+            </label>
+            <label>
+              Université souhaitée<span>*</span>
+              <input type="text" id="university" name="university" placeholder="UGA, Université Kofi Annan..." required />
+            </label>
+            <label>
+              Email
+              <input type="email" id="email" name="email" placeholder="exemple@mail.com" />
+            </label>
+          </div>
+          <button type="submit" class="button button-primary">Continuer sur WhatsApp</button>
+        </form>
+      </div>
+      <div class="container service-presenter" id="servicePresentation">
+        <div class="presentation-card">
+          <h3>Je vous accompagne de A à Z.</h3>
+          <p>Après votre réussite, je prends en charge chaque étape de votre parcours administratif pour assurer une inscription sereine et efficace.</p>
+          <ul class="checklist">
+            <li>✔ Constitution du dossier</li>
+            <li>✔ Vérification des documents</li>
+            <li>✔ Liste complète des pièces</li>
+            <li>✔ Orientation</li>
+            <li>✔ Choix de l'université</li>
+            <li>✔ Vérification des formulaires</li>
+            <li>✔ Assistance jusqu'à l'inscription</li>
+            <li>✔ Réponses à toutes les questions</li>
+            <li>✔ Conseils personnalisés</li>
+            <li>✔ Suivi permanent</li>
+          </ul>
+          <p class="notice">Note : Les décisions d'admission et d'inscription restent de la responsabilité des établissements concernés.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="pricing">
+      <div class="container pricing-grid fade-up">
+        <div>
+          <p class="section-label">Tarif</p>
+          <h2>Accompagnement complet</h2>
+          <p>Un forfait transparent et sans surprise pour un service professionnel en Guinée.</p>
+        </div>
+        <div class="pricing-card">
+          <span class="pricing-subtitle">Prix</span>
+          <strong id="priceValue">50 000 GNF</strong>
+          <p>Paiement via Orange Money ou MTN Mobile Money.</p>
+          <ul>
+            <li>Suivi administratif complet</li>
+            <li>Assistance personnalisée</li>
+            <li>Communication WhatsApp directe</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="container section-header fade-up">
+        <p class="section-label">FAQ</p>
+        <h2>Questions fréquentes</h2>
+      </div>
+      <div class="container faq-grid fade-up">
+        <button type="button" class="faq-item active" aria-expanded="true">
+          <span>Qui peut bénéficier de cet accompagnement ?</span>
+          <p>Tout nouveau bachelier en Guinée cherchant un accompagnement administratif pour son inscription universitaire.</p>
+        </button>
+        <button type="button" class="faq-item" aria-expanded="false">
+          <span>Comment se déroule le paiement ?</span>
+          <p>Le paiement s'effectue via Orange Money ou MTN Mobile Money, selon vos préférences.</p>
+        </button>
+        <button type="button" class="faq-item" aria-expanded="false">
+          <span>Combien de temps dure le suivi ?</span>
+          <p>Le suivi dure jusqu'à l'inscription définitive à l'université et couvre toutes les étapes administratives.</p>
+        </button>
+        <button type="button" class="faq-item" aria-expanded="false">
+          <span>Puis-je poser des questions pendant la procédure ?</span>
+          <p>Oui, vous pouvez poser des questions à tout moment, je reste disponible pour vous guider.</p>
+        </button>
+        <button type="button" class="faq-item" aria-expanded="false">
+          <span>À quel moment commence l'accompagnement ?</span>
+          <p>L'accompagnement commence dès la publication des résultats du baccalauréat.</p>
+        </button>
+      </div>
+    </section>
+
+    <section class="section contact-section" id="contact">
+      <div class="container contact-grid fade-up">
+        <div>
+          <p class="section-label">Contact</p>
+          <h2>Commencer mon accompagnement sur WhatsApp</h2>
+          <p>Pour activer votre suivi personnalisé, cliquez sur le bouton et envoyez votre demande avec les informations déjà remplies.</p>
+        </div>
+        <button class="button button-whatsapp" id="contactWhatsapp">Ouvrir WhatsApp</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div>
+        <h3>Orientation Bac Guinée</h3>
+        <p class="footer-name">JACQUES PEVE BILIVOGUI</p>
+        <p>© 2026 Tous droits réservés.</p>
+      </div>
+      <div class="social-links">
+        <a href="https://wa.me/224611016900" target="_blank" rel="noopener" aria-label="WhatsApp">WhatsApp</a>
+        <a href="https://www.facebook.com/share/1DLUtd6Peg/?mibextid=wwXIfr" target="_blank" rel="noopener" aria-label="Facebook">Facebook</a>
+        <a href="mailto:salchepevebilivogui@gmail.com" aria-label="Email">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
