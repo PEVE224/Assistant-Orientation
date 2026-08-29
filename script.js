@@ -14,14 +14,84 @@ const state = {
 
 const priceElement = document.getElementById('priceValue');
 const contactForm = document.getElementById('contactForm');
+const formMessage = document.getElementById('formMessage');
 const servicePresentation = document.getElementById('servicePresentation');
 const heroWhatsapp = document.getElementById('heroWhatsapp');
 const contactWhatsapp = document.getElementById('contactWhatsapp');
 const backToTop = document.getElementById('backToTop');
 const mainHeader = document.getElementById('mainHeader');
+const requiredFields = [
+  'lastName',
+  'firstName',
+  'phone',
+  'location',
+  'series',
+  'university',
+];
 
 function formatPrice(value) {
   return value.toLocaleString('fr-FR') + ' GNF';
+}
+
+function hasRequiredFieldsFilled() {
+  return requiredFields.every((fieldName) => {
+    const field = document.getElementById(fieldName);
+    return field && field.value.trim() !== '';
+  });
+}
+
+function toggleSendButtonsState() {
+  const isReady = hasRequiredFieldsFilled();
+
+  if (contactForm) {
+    const submitButton = contactForm.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.disabled = !isReady;
+      submitButton.setAttribute('aria-disabled', String(!isReady));
+    }
+  }
+
+  if (heroWhatsapp) {
+    heroWhatsapp.disabled = !isReady;
+    heroWhatsapp.setAttribute('aria-disabled', String(!isReady));
+  }
+
+  if (contactWhatsapp) {
+    contactWhatsapp.disabled = !isReady;
+    contactWhatsapp.setAttribute('aria-disabled', String(!isReady));
+  }
+
+  if (formMessage) {
+    const messageIcon = formMessage.querySelector('.form-message-icon');
+    const messageText = formMessage.querySelector('.form-message-text');
+
+    formMessage.classList.toggle('form-message--success', isReady);
+    formMessage.classList.toggle('form-message--warning', !isReady);
+
+    if (messageIcon) {
+      messageIcon.textContent = isReady ? '✓' : '!';
+    }
+
+    if (messageText) {
+      messageText.textContent = isReady
+        ? 'Tous les champs obligatoires sont remplis.'
+        : 'Veuillez remplir tous les champs obligatoires.';
+    }
+  }
+}
+
+function validateRequiredFields() {
+  const missingFields = requiredFields.filter((fieldName) => {
+    const field = document.getElementById(fieldName);
+    return !field || field.value.trim() === '';
+  });
+
+  if (missingFields.length > 0) {
+    alert('Veuillez remplir tous les champs obligatoires avant d’envoyer votre message.');
+    return false;
+  }
+
+  return true;
 }
 
 function updatePrice() {
@@ -46,6 +116,10 @@ function getWhatsAppMessage() {
 }
 
 function openWhatsApp() {
+  if (!validateRequiredFields()) {
+    return;
+  }
+
   collectFormData();
   const message = getWhatsAppMessage();
   const url = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${message}`;
@@ -90,11 +164,12 @@ function renderSubmissionSummary() {
 
 function handleFormSubmit(event) {
   event.preventDefault();
-  collectFormData();
-  if (!state.lastName || !state.firstName || !state.phone || !state.location || !state.series || !state.university) {
-    alert('Veuillez remplir tous les champs obligatoires.');
+
+  if (!validateRequiredFields()) {
     return;
   }
+
+  collectFormData();
   openWhatsApp();
   renderSubmissionSummary();
   showPresentation();
@@ -125,6 +200,16 @@ function handleScroll() {
 
 function initialize() {
   updatePrice();
+  toggleSendButtonsState();
+
+  requiredFields.forEach((fieldName) => {
+    const field = document.getElementById(fieldName);
+    if (field) {
+      field.addEventListener('input', toggleSendButtonsState);
+      field.addEventListener('change', toggleSendButtonsState);
+    }
+  });
+
   contactForm.addEventListener('submit', handleFormSubmit);
   heroWhatsapp.addEventListener('click', openWhatsApp);
   contactWhatsapp.addEventListener('click', openWhatsApp);
