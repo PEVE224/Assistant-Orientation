@@ -162,6 +162,17 @@ button {
   line-height: 1;
 }
 
+.form-message--attention {
+  animation: messageAttention 0.45s ease-in-out 2;
+}
+
+@keyframes messageAttention {
+  50% {
+    transform: translateX(6px);
+    box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.12);
+  }
+}
+
 .button-primary {
   background: var(--primary);
   color: white;

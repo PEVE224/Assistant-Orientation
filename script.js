@@ -43,24 +43,6 @@ function hasRequiredFieldsFilled() {
 function toggleSendButtonsState() {
   const isReady = hasRequiredFieldsFilled();
 
-  if (contactForm) {
-    const submitButton = contactForm.querySelector('button[type="submit"]');
-    if (submitButton) {
-      submitButton.disabled = !isReady;
-      submitButton.setAttribute('aria-disabled', String(!isReady));
-    }
-  }
-
-  if (heroWhatsapp) {
-    heroWhatsapp.disabled = !isReady;
-    heroWhatsapp.setAttribute('aria-disabled', String(!isReady));
-  }
-
-  if (contactWhatsapp) {
-    contactWhatsapp.disabled = !isReady;
-    contactWhatsapp.setAttribute('aria-disabled', String(!isReady));
-  }
-
   if (formMessage) {
     const messageIcon = formMessage.querySelector('.form-message-icon');
     const messageText = formMessage.querySelector('.form-message-text');
@@ -87,7 +69,18 @@ function validateRequiredFields() {
   });
 
   if (missingFields.length > 0) {
-    alert('Veuillez remplir tous les champs obligatoires avant d’envoyer votre message.');
+    const firstMissingField = document.getElementById(missingFields[0]);
+    const messageText = formMessage?.querySelector('.form-message-text');
+
+    formMessage?.classList.remove('form-message--success');
+    formMessage?.classList.add('form-message--warning', 'form-message--attention');
+    if (messageText) {
+      messageText.textContent = 'Veuillez remplir les champs obligatoires avant de continuer.';
+    }
+
+    document.getElementById('formSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setTimeout(() => firstMissingField?.focus({ preventScroll: true }), 450);
+    setTimeout(() => formMessage?.classList.remove('form-message--attention'), 1600);
     return false;
   }
 
@@ -216,6 +209,14 @@ function initialize() {
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   window.addEventListener('scroll', handleScroll);
   document.querySelectorAll('.faq-item').forEach((item) => item.addEventListener('click', handleAccordion));
+  document.querySelectorAll('[data-start-form]').forEach((button) => {
+    button.addEventListener('click', (event) => {
+      if (!hasRequiredFieldsFilled()) {
+        event.preventDefault();
+        validateRequiredFields();
+      }
+    });
+  });
 
   setTimeout(() => {
     document.querySelectorAll('.fade-up').forEach((element, index) => {
