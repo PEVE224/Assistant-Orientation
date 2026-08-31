@@ -4,6 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Accompagnement personnalisé des nouveaux bacheliers en Guinée pour leur orientation et leur inscription universitaire." />
+  <meta name="theme-color" content="#123b46" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="fr_GN" />
+  <meta property="og:title" content="Orientation Bac Guinée" />
+  <meta property="og:description" content="Votre avenir universitaire commence ici. Orientation et accompagnement administratif des nouveaux bacheliers en Guinée." />
+  <meta property="og:url" content="https://peve224.github.io/Assistant-Orientation/" />
+  <meta property="og:image" content="https://peve224.github.io/Assistant-Orientation/og.png" />
+  <meta property="og:image:alt" content="Orientation Bac Guinée — Votre avenir universitaire commence ici" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://peve224.github.io/Assistant-Orientation/" />
+  <link rel="icon" type="image/jpeg" href="WhatsApp%20Image%202026-08-25%20at%2012.30.35.jpeg" />
   <title>Orientation Bac Guinée | Accompagnement Post-Bac</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -16,7 +27,10 @@
   <header class="main-header" id="mainHeader">
     <div class="container header-inner">
       <a href="#hero" class="logo">Orientation Bac Guinée</a>
-      <nav class="nav-links" aria-label="Navigation principale">
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="mainNav" aria-label="Ouvrir le menu">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav-links" id="mainNav" aria-label="Navigation principale">
         <a href="#hero">Accueil</a>
         <a href="#services">Accompagnement</a>
         <a href="#pricing">Tarif</a>
@@ -108,7 +122,7 @@
             </label>
             <label>
               Téléphone<span>*</span>
-              <input type="tel" id="phone" name="phone" placeholder="+224 6XX XXX XXX" autocomplete="tel" inputmode="tel" pattern="[+0-9 ()-]{8,20}" title="Saisissez un numéro valide, par exemple +224 611 01 69 00" required />
+              <input type="tel" id="phone" name="phone" placeholder="+224 6XX XXX XXX" autocomplete="tel" inputmode="tel" title="Saisissez les 9 chiffres du numéro guinéen, avec ou sans +224" required />
             </label>
             <label>
               Département / Préfecture<span>*</span>
@@ -116,7 +130,14 @@
             </label>
             <label>
               Série du Bac<span>*</span>
-              <input type="text" id="series" name="series" placeholder="Littéraire, Scientifique..." required />
+              <input type="text" id="series" name="series" list="seriesOptions" placeholder="Choisissez ou saisissez votre série" required />
+              <datalist id="seriesOptions">
+                <option value="Sciences mathématiques"></option>
+                <option value="Sciences expérimentales"></option>
+                <option value="Sciences sociales"></option>
+                <option value="Littéraire"></option>
+                <option value="Technique et professionnel"></option>
+              </datalist>
             </label>
             <label>
               Moyenne
@@ -124,14 +145,30 @@
             </label>
             <label>
               Université souhaitée<span>*</span>
-              <input type="text" id="university" name="university" placeholder="UGA, Université Kofi Annan..." required />
+              <input type="text" id="university" name="university" list="universityOptions" placeholder="Choisissez ou saisissez une université" required />
+              <datalist id="universityOptions">
+                <option value="Université Gamal Abdel Nasser de Conakry"></option>
+                <option value="Université Général Lansana Conté de Sonfonia"></option>
+                <option value="Université Kofi Annan de Guinée"></option>
+                <option value="Université Nongo Conakry"></option>
+                <option value="Université Julius Nyerere de Kankan"></option>
+                <option value="Université de Labé"></option>
+                <option value="Université de Nzérékoré"></option>
+                <option value="Université Mahatma Gandhi"></option>
+              </datalist>
             </label>
             <label>
               Email
               <input type="email" id="email" name="email" placeholder="exemple@mail.com" autocomplete="email" />
             </label>
           </div>
-          <p class="privacy-note">En continuant, vous acceptez que ces informations soient utilisées uniquement pour préparer votre demande d’accompagnement sur WhatsApp.</p>
+          <label class="consent-field">
+            <input type="checkbox" id="consent" name="consent" required />
+            <span>J’accepte que mes informations soient utilisées uniquement pour préparer et suivre ma demande d’accompagnement sur WhatsApp.</span>
+          </label>
+          <noscript>
+            <p class="noscript-note">JavaScript est désactivé. Vous pouvez <a href="https://wa.me/224611016900" target="_blank" rel="noopener">contacter directement le conseiller sur WhatsApp</a>.</p>
+          </noscript>
           <p class="form-message form-message--warning" id="formMessage" role="status" aria-live="polite" hidden>
             <span class="form-message-icon" aria-hidden="true">!</span>
             <span class="form-message-text">Veuillez remplir tous les champs obligatoires.</span>
@@ -186,26 +223,26 @@
         <h2>Questions fréquentes</h2>
       </div>
       <div class="container faq-grid fade-up">
-        <button type="button" class="faq-item active" aria-expanded="true">
-          <span>Qui peut bénéficier de cet accompagnement ?</span>
-          <p>Tout nouveau bachelier en Guinée cherchant un accompagnement administratif pour son inscription universitaire.</p>
-        </button>
-        <button type="button" class="faq-item" aria-expanded="false">
-          <span>Comment se déroule le paiement ?</span>
-          <p>Le paiement s'effectue via Orange Money ou MTN Mobile Money, selon vos préférences.</p>
-        </button>
-        <button type="button" class="faq-item" aria-expanded="false">
-          <span>Combien de temps dure le suivi ?</span>
-          <p>Le suivi dure jusqu'à l'inscription définitive à l'université et couvre toutes les étapes administratives.</p>
-        </button>
-        <button type="button" class="faq-item" aria-expanded="false">
-          <span>Puis-je poser des questions pendant la procédure ?</span>
-          <p>Oui, vous pouvez poser des questions à tout moment, je reste disponible pour vous guider.</p>
-        </button>
-        <button type="button" class="faq-item" aria-expanded="false">
-          <span>À quel moment commence l'accompagnement ?</span>
-          <p>L'accompagnement commence dès la publication des résultats du baccalauréat.</p>
-        </button>
+        <article class="faq-item active">
+          <button type="button" class="faq-question" id="faq-question-1" aria-expanded="true" aria-controls="faq-answer-1"><span>Qui peut bénéficier de cet accompagnement ?</span><b aria-hidden="true">−</b></button>
+          <div class="faq-answer" id="faq-answer-1" role="region" aria-labelledby="faq-question-1"><p>Tout nouveau bachelier en Guinée cherchant un accompagnement administratif pour son inscription universitaire.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" class="faq-question" id="faq-question-2" aria-expanded="false" aria-controls="faq-answer-2"><span>Comment se déroule le paiement ?</span><b aria-hidden="true">+</b></button>
+          <div class="faq-answer" id="faq-answer-2" role="region" aria-labelledby="faq-question-2" hidden><p>Le paiement s'effectue via Orange Money ou MTN Mobile Money, selon vos préférences.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" class="faq-question" id="faq-question-3" aria-expanded="false" aria-controls="faq-answer-3"><span>Combien de temps dure le suivi ?</span><b aria-hidden="true">+</b></button>
+          <div class="faq-answer" id="faq-answer-3" role="region" aria-labelledby="faq-question-3" hidden><p>Le suivi dure jusqu'à l'inscription définitive à l'université et couvre toutes les étapes administratives.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" class="faq-question" id="faq-question-4" aria-expanded="false" aria-controls="faq-answer-4"><span>Puis-je poser des questions pendant la procédure ?</span><b aria-hidden="true">+</b></button>
+          <div class="faq-answer" id="faq-answer-4" role="region" aria-labelledby="faq-question-4" hidden><p>Oui, vous pouvez poser des questions à tout moment, je reste disponible pour vous guider.</p></div>
+        </article>
+        <article class="faq-item">
+          <button type="button" class="faq-question" id="faq-question-5" aria-expanded="false" aria-controls="faq-answer-5"><span>À quel moment commence l'accompagnement ?</span><b aria-hidden="true">+</b></button>
+          <div class="faq-answer" id="faq-answer-5" role="region" aria-labelledby="faq-question-5" hidden><p>L'accompagnement commence dès la publication des résultats du baccalauréat.</p></div>
+        </article>
       </div>
     </section>
 

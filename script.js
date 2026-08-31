@@ -20,6 +20,8 @@ const heroWhatsapp = document.getElementById('heroWhatsapp');
 const contactWhatsapp = document.getElementById('contactWhatsapp');
 const backToTop = document.getElementById('backToTop');
 const mainHeader = document.getElementById('mainHeader');
+const menuToggle = document.getElementById('menuToggle');
+const mainNav = document.getElementById('mainNav');
 let validationAttempted = false;
 
 function formatPrice(value) {
@@ -48,8 +50,27 @@ function toggleSendButtonsState() {
   }
 }
 
+function normalizeGuineaPhone(value) {
+  let digits = value.replace(/\D/g, '');
+  if (digits.startsWith('00224')) digits = digits.slice(5);
+  if (digits.startsWith('224') && digits.length === 12) digits = digits.slice(3);
+  return digits;
+}
+
+function refreshPhoneValidity() {
+  const phoneField = document.getElementById('phone');
+  if (!phoneField) return;
+  const digits = normalizeGuineaPhone(phoneField.value);
+  phoneField.setCustomValidity(
+    phoneField.value.trim() && !/^\d{9}$/.test(digits)
+      ? 'Saisissez exactement 9 chiffres, avec ou sans l’indicatif +224.'
+      : ''
+  );
+}
+
 function validateRequiredFields() {
   validationAttempted = true;
+  refreshPhoneValidity();
   const invalidFields = Array.from(contactForm.querySelectorAll('input')).filter((field) => !field.checkValidity());
 
   if (invalidFields.length > 0) {
@@ -85,7 +106,8 @@ function updatePrice() {
 function collectFormData() {
   state.lastName = document.getElementById('lastName').value.trim();
   state.firstName = document.getElementById('firstName').value.trim();
-  state.phone = document.getElementById('phone').value.trim();
+  const phoneDigits = normalizeGuineaPhone(document.getElementById('phone').value);
+  state.phone = phoneDigits ? `+224 ${phoneDigits}` : '';
   state.location = document.getElementById('location').value.trim();
   state.series = document.getElementById('series').value.trim();
   state.average = document.getElementById('average').value.trim();
@@ -158,14 +180,29 @@ function handleFormSubmit(event) {
 }
 
 function handleAccordion(event) {
-  const target = event.currentTarget;
+  const question = event.currentTarget;
+  const target = question.closest('.faq-item');
   const isActive = target.classList.contains('active');
-  document.querySelectorAll('.faq-item').forEach((item) => item.classList.remove('active'));
-  document.querySelectorAll('.faq-item').forEach((item) => item.setAttribute('aria-expanded', 'false'));
+  document.querySelectorAll('.faq-item').forEach((item) => {
+    item.classList.remove('active');
+    const itemQuestion = item.querySelector('.faq-question');
+    const itemAnswer = item.querySelector('.faq-answer');
+    itemQuestion.setAttribute('aria-expanded', 'false');
+    itemQuestion.querySelector('b').textContent = '+';
+    itemAnswer.hidden = true;
+  });
   if (!isActive) {
     target.classList.add('active');
-    target.setAttribute('aria-expanded', 'true');
+    question.setAttribute('aria-expanded', 'true');
+    question.querySelector('b').textContent = '−';
+    target.querySelector('.faq-answer').hidden = false;
   }
+}
+
+function closeMobileMenu() {
+  mainNav?.classList.remove('open');
+  menuToggle?.setAttribute('aria-expanded', 'false');
+  menuToggle?.setAttribute('aria-label', 'Ouvrir le menu');
 }
 
 function handleScroll() {
@@ -186,6 +223,7 @@ function initialize() {
 
   contactForm.querySelectorAll('input').forEach((field) => {
     field.addEventListener('input', () => {
+      if (field.id === 'phone') refreshPhoneValidity();
       if (field.checkValidity()) {
         field.removeAttribute('aria-invalid');
       }
@@ -199,7 +237,16 @@ function initialize() {
   contactWhatsapp.addEventListener('click', openWhatsApp);
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   window.addEventListener('scroll', handleScroll);
-  document.querySelectorAll('.faq-item').forEach((item) => item.addEventListener('click', handleAccordion));
+  document.querySelectorAll('.faq-question').forEach((item) => item.addEventListener('click', handleAccordion));
+  menuToggle?.addEventListener('click', () => {
+    const isOpen = mainNav.classList.toggle('open');
+    menuToggle.setAttribute('aria-expanded', String(isOpen));
+    menuToggle.setAttribute('aria-label', isOpen ? 'Fermer le menu' : 'Ouvrir le menu');
+  });
+  mainNav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMobileMenu));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') closeMobileMenu();
+  });
   document.querySelectorAll('[data-start-form]').forEach((button) => {
     button.addEventListener('click', (event) => {
       if (!contactForm.checkValidity()) {
