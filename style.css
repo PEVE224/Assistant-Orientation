@@ -137,6 +137,17 @@ button {
   font-weight: 600;
 }
 
+.form-message[hidden] {
+  display: none;
+}
+
+.privacy-note {
+  margin: -4px 0 16px;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  line-height: 1.55;
+}
+
 .form-message--warning {
   color: #92400e;
   background: #fff7ed;
@@ -485,6 +496,21 @@ input:focus {
   transform: translateY(-1px);
 }
 
+input[aria-invalid="true"] {
+  border-color: #dc2626;
+  background: #fff7f7;
+}
+
+section {
+  scroll-margin-top: 96px;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent-warm);
+  outline-offset: 4px;
+}
+
 .service-presenter {
   margin-top: 40px;
 }
@@ -713,6 +739,10 @@ input:focus {
 }
 
 @media (max-width: 720px) {
+  .main-header {
+    position: sticky;
+  }
+
   .header-inner {
     flex-wrap: wrap;
     justify-content: space-between;
@@ -729,7 +759,7 @@ input:focus {
   }
 
   .hero {
-    padding-top: 120px;
+    padding-top: 56px;
   }
 
   .hero h1 {
@@ -749,5 +779,19 @@ input:focus {
   .presentation-card,
   .pricing-card {
     padding: 28px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

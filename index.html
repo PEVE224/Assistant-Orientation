@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Accompagnement personnalisé des nouveaux bacheliers en Guinée pour leur orientation et leur inscription universitaire." />
   <title>Orientation Bac Guinée | Accompagnement Post-Bac</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -95,23 +96,23 @@
           <h2>Votre accompagnement démarre ici.</h2>
           <p>Remplissez le formulaire pour recevoir une réponse rapide et un plan d'accompagnement complet.</p>
         </div>
-        <form class="contact-form" id="contactForm">
+        <form class="contact-form" id="contactForm" novalidate>
           <div class="input-grid">
             <label>
               Nom<span>*</span>
-              <input type="text" id="lastName" name="lastName" placeholder="Votre nom" required />
+              <input type="text" id="lastName" name="lastName" placeholder="Votre nom" autocomplete="family-name" required />
             </label>
             <label>
               Prénom<span>*</span>
-              <input type="text" id="firstName" name="firstName" placeholder="Votre prénom" required />
+              <input type="text" id="firstName" name="firstName" placeholder="Votre prénom" autocomplete="given-name" required />
             </label>
             <label>
               Téléphone<span>*</span>
-              <input type="tel" id="phone" name="phone" placeholder="+224 6XX XXX XXX" required />
+              <input type="tel" id="phone" name="phone" placeholder="+224 6XX XXX XXX" autocomplete="tel" inputmode="tel" pattern="[+0-9 ()-]{8,20}" title="Saisissez un numéro valide, par exemple +224 611 01 69 00" required />
             </label>
             <label>
               Département / Préfecture<span>*</span>
-              <input type="text" id="location" name="location" placeholder="Conakry, Kindia..." required />
+              <input type="text" id="location" name="location" placeholder="Conakry, Kindia..." autocomplete="address-level2" required />
             </label>
             <label>
               Série du Bac<span>*</span>
@@ -119,7 +120,7 @@
             </label>
             <label>
               Moyenne
-              <input type="text" id="average" name="average" placeholder="Exemple : 12.75" />
+              <input type="number" id="average" name="average" placeholder="Exemple : 12.75" inputmode="decimal" min="0" max="20" step="0.01" />
             </label>
             <label>
               Université souhaitée<span>*</span>
@@ -127,10 +128,11 @@
             </label>
             <label>
               Email
-              <input type="email" id="email" name="email" placeholder="exemple@mail.com" />
+              <input type="email" id="email" name="email" placeholder="exemple@mail.com" autocomplete="email" />
             </label>
           </div>
-          <p class="form-message form-message--warning" id="formMessage" role="status" aria-live="polite">
+          <p class="privacy-note">En continuant, vous acceptez que ces informations soient utilisées uniquement pour préparer votre demande d’accompagnement sur WhatsApp.</p>
+          <p class="form-message form-message--warning" id="formMessage" role="status" aria-live="polite" hidden>
             <span class="form-message-icon" aria-hidden="true">!</span>
             <span class="form-message-text">Veuillez remplir tous les champs obligatoires.</span>
           </p>

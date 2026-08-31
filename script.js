@@ -20,66 +20,55 @@ const heroWhatsapp = document.getElementById('heroWhatsapp');
 const contactWhatsapp = document.getElementById('contactWhatsapp');
 const backToTop = document.getElementById('backToTop');
 const mainHeader = document.getElementById('mainHeader');
-const requiredFields = [
-  'lastName',
-  'firstName',
-  'phone',
-  'location',
-  'series',
-  'university',
-];
+let validationAttempted = false;
 
 function formatPrice(value) {
   return value.toLocaleString('fr-FR') + ' GNF';
 }
 
-function hasRequiredFieldsFilled() {
-  return requiredFields.every((fieldName) => {
-    const field = document.getElementById(fieldName);
-    return field && field.value.trim() !== '';
-  });
-}
-
 function toggleSendButtonsState() {
-  const isReady = hasRequiredFieldsFilled();
-
   if (formMessage) {
     const messageIcon = formMessage.querySelector('.form-message-icon');
     const messageText = formMessage.querySelector('.form-message-text');
 
-    formMessage.classList.toggle('form-message--success', isReady);
-    formMessage.classList.toggle('form-message--warning', !isReady);
+    const formIsValid = contactForm?.checkValidity() ?? false;
+    formMessage.hidden = !validationAttempted && !formIsValid;
+    formMessage.classList.toggle('form-message--success', formIsValid);
+    formMessage.classList.toggle('form-message--warning', !formIsValid);
 
     if (messageIcon) {
-      messageIcon.textContent = isReady ? '✓' : '!';
+      messageIcon.textContent = formIsValid ? '✓' : '!';
     }
 
     if (messageText) {
-      messageText.textContent = isReady
+      messageText.textContent = formIsValid
         ? 'Tous les champs obligatoires sont remplis.'
-        : 'Veuillez remplir tous les champs obligatoires.';
+        : 'Veuillez vérifier les champs obligatoires et leur format.';
     }
   }
 }
 
 function validateRequiredFields() {
-  const missingFields = requiredFields.filter((fieldName) => {
-    const field = document.getElementById(fieldName);
-    return !field || field.value.trim() === '';
-  });
+  validationAttempted = true;
+  const invalidFields = Array.from(contactForm.querySelectorAll('input')).filter((field) => !field.checkValidity());
 
-  if (missingFields.length > 0) {
-    const firstMissingField = document.getElementById(missingFields[0]);
+  if (invalidFields.length > 0) {
+    const firstInvalidField = invalidFields[0];
     const messageText = formMessage?.querySelector('.form-message-text');
 
+    invalidFields.forEach((field) => field.setAttribute('aria-invalid', 'true'));
+    formMessage.hidden = false;
     formMessage?.classList.remove('form-message--success');
     formMessage?.classList.add('form-message--warning', 'form-message--attention');
     if (messageText) {
-      messageText.textContent = 'Veuillez remplir les champs obligatoires avant de continuer.';
+      messageText.textContent = 'Veuillez remplir correctement les champs indiqués avant de continuer.';
     }
 
     document.getElementById('formSection')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setTimeout(() => firstMissingField?.focus({ preventScroll: true }), 450);
+    setTimeout(() => {
+      firstInvalidField.focus({ preventScroll: true });
+      firstInvalidField.reportValidity();
+    }, 450);
     setTimeout(() => formMessage?.classList.remove('form-message--attention'), 1600);
     return false;
   }
@@ -119,9 +108,8 @@ function openWhatsApp() {
   window.open(url, '_blank');
 }
 
-function showPresentation() {
-  if (!servicePresentation) return;
-  servicePresentation.scrollIntoView({ behavior: 'smooth' });
+function showPresentation(element = servicePresentation) {
+  element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 function renderSubmissionSummary() {
@@ -153,6 +141,7 @@ function renderSubmissionSummary() {
   notice.textContent = 'Vos informations sont utilisées pour préparer votre message WhatsApp et votre accompagnement personnalisé.';
   summary.append(heading, introduction, details, notice);
   servicePresentation.replaceWith(summary);
+  return summary;
 }
 
 function handleFormSubmit(event) {
@@ -164,8 +153,8 @@ function handleFormSubmit(event) {
 
   collectFormData();
   openWhatsApp();
-  renderSubmissionSummary();
-  showPresentation();
+  const summary = renderSubmissionSummary();
+  showPresentation(summary);
 }
 
 function handleAccordion(event) {
@@ -195,12 +184,14 @@ function initialize() {
   updatePrice();
   toggleSendButtonsState();
 
-  requiredFields.forEach((fieldName) => {
-    const field = document.getElementById(fieldName);
-    if (field) {
-      field.addEventListener('input', toggleSendButtonsState);
-      field.addEventListener('change', toggleSendButtonsState);
-    }
+  contactForm.querySelectorAll('input').forEach((field) => {
+    field.addEventListener('input', () => {
+      if (field.checkValidity()) {
+        field.removeAttribute('aria-invalid');
+      }
+      toggleSendButtonsState();
+    });
+    field.addEventListener('change', toggleSendButtonsState);
   });
 
   contactForm.addEventListener('submit', handleFormSubmit);
@@ -211,7 +202,7 @@ function initialize() {
   document.querySelectorAll('.faq-item').forEach((item) => item.addEventListener('click', handleAccordion));
   document.querySelectorAll('[data-start-form]').forEach((button) => {
     button.addEventListener('click', (event) => {
-      if (!hasRequiredFieldsFilled()) {
+      if (!contactForm.checkValidity()) {
         event.preventDefault();
         validateRequiredFields();
       }
