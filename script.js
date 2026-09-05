@@ -119,15 +119,13 @@ function getWhatsAppMessage() {
   return `Bonjour,%0aJe souhaite commencer mon accompagnement.%0a%0aNom : ${encodeURIComponent(state.lastName)}%0aPrénom : ${encodeURIComponent(state.firstName)}%0aTéléphone : ${encodeURIComponent(state.phone)}%0aDépartement : ${encodeURIComponent(state.location)}%0aSérie : ${encodeURIComponent(state.series)}%0aMoyenne : ${encodeURIComponent(state.average || 'Non renseignée')}%0aUniversité souhaitée : ${encodeURIComponent(state.university)}%0aEmail : ${encodeURIComponent(state.email || 'Non renseigné')}%0a%0aMerci.`;
 }
 
-function openWhatsApp() {
-  if (!validateRequiredFields()) {
-    return;
-  }
-
-  collectFormData();
-  const message = getWhatsAppMessage();
-  const url = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${message}`;
-  window.open(url, '_blank');
+function openWhatsApp(
+  message = 'Bonjour, je souhaite obtenir des renseignements sur votre accompagnement en orientation.',
+  messageIsEncoded = false
+) {
+  const encodedMessage = messageIsEncoded ? message : encodeURIComponent(message);
+  const url = `https://wa.me/${whatsappNumber.replace(/[^0-9]/g, '')}?text=${encodedMessage}`;
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 function showPresentation(element = servicePresentation) {
@@ -174,7 +172,7 @@ function handleFormSubmit(event) {
   }
 
   collectFormData();
-  openWhatsApp();
+  openWhatsApp(getWhatsAppMessage(), true);
   const summary = renderSubmissionSummary();
   showPresentation(summary);
 }
@@ -209,10 +207,10 @@ function handleScroll() {
   const offset = window.scrollY;
   if (offset > 60) {
     mainHeader.style.boxShadow = '0 14px 40px rgba(18, 35, 85, 0.12)';
-    mainHeader.style.background = 'rgba(255,255,255,0.95)';
+    mainHeader.style.background = 'rgba(237,241,239,0.96)';
   } else {
     mainHeader.style.boxShadow = 'none';
-    mainHeader.style.background = 'rgba(255,255,255,0.88)';
+    mainHeader.style.background = 'rgba(237,241,239,0.9)';
   }
   backToTop.classList.toggle('visible', offset > 500);
 }
@@ -247,15 +245,6 @@ function initialize() {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') closeMobileMenu();
   });
-  document.querySelectorAll('[data-start-form]').forEach((button) => {
-    button.addEventListener('click', (event) => {
-      if (!contactForm.checkValidity()) {
-        event.preventDefault();
-        validateRequiredFields();
-      }
-    });
-  });
-
   setTimeout(() => {
     document.querySelectorAll('.fade-up').forEach((element, index) => {
       element.style.animationDelay = `${index * 0.12}s`;
