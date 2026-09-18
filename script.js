@@ -141,7 +141,7 @@ function handleSurveySubmit(event) {
     invalidFields.forEach((field) => field.setAttribute('aria-invalid', 'true'));
     surveyMessage.hidden = false;
     surveyMessage.classList.add('form-message--attention');
-    if (messageText) messageText.textContent = 'Il reste seulement à confirmer l’autorisation de publication.';
+    if (messageText) messageText.textContent = 'Réponds aux 10 questions et confirme l’autorisation de publication.';
     firstInvalidField.focus({ preventScroll: true });
     firstInvalidField.reportValidity();
     setTimeout(() => surveyMessage?.classList.remove('form-message--attention'), 1600);
