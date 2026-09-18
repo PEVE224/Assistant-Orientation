@@ -18,6 +18,8 @@ const formMessage = document.getElementById('formMessage');
 const servicePresentation = document.getElementById('servicePresentation');
 const heroWhatsapp = document.getElementById('heroWhatsapp');
 const contactWhatsapp = document.getElementById('contactWhatsapp');
+const surveyForm = document.getElementById('surveyForm');
+const surveyMessage = document.getElementById('surveyMessage');
 const backToTop = document.getElementById('backToTop');
 const mainHeader = document.getElementById('mainHeader');
 const menuToggle = document.getElementById('menuToggle');
@@ -119,6 +121,41 @@ function getWhatsAppMessage() {
   return `Bonjour,%0aJe souhaite commencer mon accompagnement.%0a%0aNom : ${encodeURIComponent(state.lastName)}%0aPrénom : ${encodeURIComponent(state.firstName)}%0aTéléphone : ${encodeURIComponent(state.phone)}%0aDépartement : ${encodeURIComponent(state.location)}%0aSérie : ${encodeURIComponent(state.series)}%0aMoyenne : ${encodeURIComponent(state.average || 'Non renseignée')}%0aUniversité souhaitée : ${encodeURIComponent(state.university)}%0aEmail : ${encodeURIComponent(state.email || 'Non renseigné')}%0a%0aMerci.`;
 }
 
+function getSurveyMessage() {
+  const firstName = document.getElementById('surveyFirstName').value.trim();
+  const year = document.getElementById('surveyYear').value.trim();
+  const answers = Array.from(surveyForm.querySelectorAll('[data-survey-question]'))
+    .map((field) => `Question ${field.dataset.surveyQuestion} : ${field.value.trim() || 'Pas de réponse'}`)
+    .join('%0a%0a');
+
+  return `Bonjour, je souhaite envoyer mon retour d’expérience.%0a%0aPrénom : ${encodeURIComponent(firstName || 'Anonyme')}%0aAnnée d’accompagnement : ${encodeURIComponent(year || 'Non précisée')}%0a%0a${answers}%0a%0aJ’autorise la publication de mes réponses comme témoignage.`;
+}
+
+function handleSurveySubmit(event) {
+  event.preventDefault();
+  const invalidFields = Array.from(surveyForm.querySelectorAll('input, select, textarea')).filter((field) => !field.checkValidity());
+
+  if (invalidFields.length > 0) {
+    const firstInvalidField = invalidFields[0];
+    const messageText = surveyMessage?.querySelector('.form-message-text');
+    invalidFields.forEach((field) => field.setAttribute('aria-invalid', 'true'));
+    surveyMessage.hidden = false;
+    surveyMessage.classList.add('form-message--attention');
+    if (messageText) messageText.textContent = 'Il reste seulement à confirmer l’autorisation de publication.';
+    firstInvalidField.focus({ preventScroll: true });
+    firstInvalidField.reportValidity();
+    setTimeout(() => surveyMessage?.classList.remove('form-message--attention'), 1600);
+    return;
+  }
+
+  openWhatsApp(getSurveyMessage(), true);
+  surveyMessage.hidden = false;
+  surveyMessage.classList.remove('form-message--warning');
+  surveyMessage.classList.add('form-message--success');
+  const messageText = surveyMessage.querySelector('.form-message-text');
+  if (messageText) messageText.textContent = 'Merci ! Votre témoignage est prêt à être envoyé sur WhatsApp.';
+}
+
 function openWhatsApp(
   message = 'Bonjour, je souhaite obtenir des renseignements sur votre accompagnement en orientation.',
   messageIsEncoded = false
@@ -205,21 +242,23 @@ function closeMobileMenu() {
 
 function handleScroll() {
   const offset = window.scrollY;
-  if (offset > 60) {
-    mainHeader.style.boxShadow = '0 14px 40px rgba(18, 35, 85, 0.12)';
-    mainHeader.style.background = 'rgba(237,241,239,0.96)';
-  } else {
-    mainHeader.style.boxShadow = 'none';
-    mainHeader.style.background = 'rgba(237,241,239,0.9)';
+  if (mainHeader) {
+    if (offset > 60) {
+      mainHeader.style.boxShadow = '0 14px 40px rgba(18, 35, 85, 0.12)';
+      mainHeader.style.background = 'rgba(237,241,239,0.96)';
+    } else {
+      mainHeader.style.boxShadow = 'none';
+      mainHeader.style.background = 'rgba(237,241,239,0.9)';
+    }
   }
-  backToTop.classList.toggle('visible', offset > 500);
+  backToTop?.classList.toggle('visible', offset > 500);
 }
 
 function initialize() {
   updatePrice();
   toggleSendButtonsState();
 
-  contactForm.querySelectorAll('input').forEach((field) => {
+  contactForm?.querySelectorAll('input').forEach((field) => {
     field.addEventListener('input', () => {
       if (field.id === 'phone') refreshPhoneValidity();
       if (field.checkValidity()) {
@@ -230,10 +269,15 @@ function initialize() {
     field.addEventListener('change', toggleSendButtonsState);
   });
 
-  contactForm.addEventListener('submit', handleFormSubmit);
-  heroWhatsapp.addEventListener('click', openWhatsApp);
-  contactWhatsapp.addEventListener('click', openWhatsApp);
-  backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  contactForm?.addEventListener('submit', handleFormSubmit);
+  surveyForm?.querySelectorAll('input, select, textarea').forEach((field) => {
+    field.addEventListener('input', () => field.removeAttribute('aria-invalid'));
+    field.addEventListener('change', () => field.removeAttribute('aria-invalid'));
+  });
+  surveyForm?.addEventListener('submit', handleSurveySubmit);
+  heroWhatsapp?.addEventListener('click', openWhatsApp);
+  contactWhatsapp?.addEventListener('click', openWhatsApp);
+  backToTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
   window.addEventListener('scroll', handleScroll);
   document.querySelectorAll('.faq-question').forEach((item) => item.addEventListener('click', handleAccordion));
   menuToggle?.addEventListener('click', () => {

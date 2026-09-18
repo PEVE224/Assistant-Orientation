@@ -42,6 +42,7 @@
         <a href="#hero">Accueil</a>
         <a href="#services">Accompagnement</a>
         <a href="#pricing">Tarif</a>
+        <a href="sondage.html">Répondre au sondage</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -58,7 +59,7 @@
           <h1>Félicitations pour votre réussite au Baccalauréat !</h1>
           <p>Ne laissez pas les démarches administratives devenir un obstacle. Je vous accompagne personnellement depuis le regroupement des documents jusqu'à votre inscription définitive à l'université.</p>
           <div class="hero-actions">
-            <a href="#formSection" class="button button-primary" data-start-form>Commencer</a>
+            <a href="sondage.html" class="button button-primary">Répondre au sondage</a>
             <button class="button button-secondary" id="heroWhatsapp">Me contacter sur WhatsApp</button>
           </div>
         </div>
@@ -222,6 +223,84 @@
             <li>Communication WhatsApp directe</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <section class="section survey-section" id="survey">
+      <div class="container survey-grid fade-up">
+        <div class="survey-copy">
+          <p class="section-label">Un petit retour, sans pression</p>
+          <h2>Raconte ton expérience à ton rythme.</h2>
+          <p>Il n’y a pas de mauvaise réponse. Tu peux répondre à toutes les questions ou seulement à celles qui te donnent envie de parler.</p>
+          <div class="survey-note">
+            <strong>Prends ton temps</strong>
+            <span>Écris comme tu parlerais à un ami. Quelques mots suffisent.</span>
+          </div>
+        </div>
+        <form class="survey-form" id="surveyForm" novalidate>
+          <div class="survey-identity">
+            <label>
+              Ton prénom <small>(facultatif)</small>
+              <input type="text" id="surveyFirstName" name="surveyFirstName" placeholder="Comment pouvons-nous t’appeler ?" autocomplete="given-name" />
+            </label>
+            <label>
+              Ton année d’accompagnement <small>(facultatif)</small>
+              <input type="text" id="surveyYear" name="surveyYear" placeholder="Exemple : 2026" inputmode="numeric" />
+            </label>
+          </div>
+          <div class="question-list">
+            <label class="question-card">
+              <strong>1. Qu’est-ce qui t’a donné envie de demander de l’aide ?</strong>
+              <textarea name="question1" data-survey-question="1" rows="3" placeholder="Tu peux écrire quelques mots..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>2. Comment as-tu trouvé les explications reçues ?</strong>
+              <textarea name="question2" data-survey-question="2" rows="3" placeholder="Claires, simples, détaillées..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>3. Quelle étape t’a le plus aidé ?</strong>
+              <textarea name="question3" data-survey-question="3" rows="3" placeholder="L’orientation, le dossier, l’inscription..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>4. As-tu gagné du temps ou évité une difficulté ?</strong>
+              <textarea name="question4" data-survey-question="4" rows="3" placeholder="Raconte-nous si tu veux..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>5. Comment as-tu vécu les échanges sur WhatsApp ?</strong>
+              <textarea name="question5" data-survey-question="5" rows="3" placeholder="Ta réponse ici..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>6. T’es-tu senti(e) écouté(e) et accompagné(e) ?</strong>
+              <textarea name="question6" data-survey-question="6" rows="3" placeholder="Ta réponse ici..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>7. Qu’est-ce qui t’a le plus rassuré ?</strong>
+              <textarea name="question7" data-survey-question="7" rows="3" placeholder="Ta réponse ici..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>8. Qu’est-ce que tu as apprécié dans cette assistance ?</strong>
+              <textarea name="question8" data-survey-question="8" rows="3" placeholder="Ta réponse ici..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>9. Que pourrait-on encore améliorer ?</strong>
+              <textarea name="question9" data-survey-question="9" rows="3" placeholder="Toutes les idées sont les bienvenues..." ></textarea>
+            </label>
+            <label class="question-card">
+              <strong>10. Que dirais-tu à un autre étudiant qui hésite à demander de l’aide ?</strong>
+              <textarea name="question10" data-survey-question="10" rows="3" placeholder="Ton conseil ou ton message..." ></textarea>
+            </label>
+          </div>
+          <label class="consent-field">
+            <input type="checkbox" id="surveyPublishConsent" name="surveyPublishConsent" required />
+            <span>J’autorise la publication de mes réponses comme témoignage. Je peux demander leur retrait quand je veux.</span>
+          </label>
+          <p class="survey-private-note">Tu peux laisser une question vide. Tes réponses seront d’abord reçues sur WhatsApp.</p>
+          <p class="form-message form-message--warning" id="surveyMessage" role="status" aria-live="polite" hidden>
+            <span class="form-message-icon" aria-hidden="true">!</span>
+            <span class="form-message-text">Tu peux répondre à ton rythme.</span>
+          </p>
+          <button type="submit" class="button button-primary">Envoyer mes réponses sur WhatsApp</button>
+        </form>
       </div>
     </section>
 
